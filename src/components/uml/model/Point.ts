@@ -1,3 +1,3 @@
 export class Point {
-  constructor(public x: Number = 0, public y: Number = 0) { }
+  constructor(public x: number = 0, public y: number = 0) { }
 }

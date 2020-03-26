@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   model: NgxEditorModel = {
     value: `class ClassAnimal {
-      
+
       age:number = 1;
 
       address: string = ''
@@ -51,8 +51,6 @@ export class AppComponent implements OnInit {
     language: 'typescript'
   };
 
-
-
   constructor(private ngZone: NgZone, private umlService: UmlService) { }
 
   async parseCode(code: string) {
@@ -62,8 +60,6 @@ export class AppComponent implements OnInit {
       this.classDeclarations = tsFile.declarations.filter(declaration => {
         return declaration instanceof ClassDeclaration
       }) as ClassDeclaration[];
-
-      // console.log('this.basicMenu: ', this.basicMenu);
       console.log('this.classDeclarations: ', this.classDeclarations);
     })
   }

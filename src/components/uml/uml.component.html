@@ -1,3 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 1000px;height:1000px;" viewBox="0 0 1000 1000" class="boundary">
-  <g app-class cdkDrag [cdkDragFreeDragPosition]="classItem.point" cdkDragBoundary=".boundary"  (cdkDragEnded)="cdkDragHandle($event, classItem)" [cdkDragFreeDragPosition]="classItem.point" *ngFor="let classItem of classItems;  let i=index" [classDeclaration]="classItem.classDeclaration" ></g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 1200px;height:1200px;" viewBox="0 0 1200 1200" class="boundary">
+  <defs>
+    <marker id="line-marker" refX="7" refY="5" markerWidth="10" markerHeight="10" orient="auto">
+      <polygon class="line-marker" points="7,5 0,10 0,0"></polygon>
+    </marker>
+  </defs>
+  <g app-line *ngFor="let superClassItem of superClassItems" [source]="superClassItem" [target]="umlService.getClassItemByClassName(superClassItem.classDeclaration.superClassDeclaration.name)"></g>
+  <g app-class cdkDrag [cdkDragFreeDragPosition]="classItem.point" [classItem]="classItem" cdkDragBoundary=".boundary" (cdkDragStarted)="cdkDragStarted(classItem)"  (cdkDragMoved)="cdkDragHandle($event, classItem)" [cdkDragFreeDragPosition]="classItem.point" *ngFor="let classItem of classItems;  let i=index"></g>
 </svg>

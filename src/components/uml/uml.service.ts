@@ -1,24 +1,32 @@
 import { Injectable } from '@angular/core';
 import { editor as Editor, IRange } from 'monaco-editor';
 import { PropertyDeclaration, MethodDeclaration } from 'src/lib/ts-parser';
+import { ClassItem } from './model/ClassItem';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UmlService {
 
-  constructor() { }
+  constructor() {
+  }
 
   codeEditor: Editor.ICodeEditor
   selectedItem: MethodDeclaration | PropertyDeclaration
-  
+
+  classItems: ClassItem[]
+
+  getClassItemByClassName(name: string){
+    return this.classItems.find(classItem => classItem.classDeclaration.name === name)
+  }
+
   startEndToRange(start: number, end: number): IRange {
     let startLineNumber = 1
     let startColumn = 0
     let endLineNumber = 1
     let endColumn = 0
     let total = 0
-    
+
     this.codeEditor.getValue().split(/\n/g).some(text => {
       if (start < (total + text.length)) {
         startColumn = start - total + 2

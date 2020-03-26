@@ -1,29 +1,28 @@
-<svg:foreignObject width="150" height="400" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg">
+<svg:foreignObject [attr.width]="classItem.rect.width" [attr.height]="classItem.rect.height"  xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg">
   <xhtml:div class="wrap" #wrap>
     <div class="header">
-      <div>{{ classDeclaration.name}}</div>
+      <div>{{ classItem.classDeclaration.name}}</div>
       <div>类</div>
     </div>
-    <div class="properties" *ngIf="classDeclaration.properties.length">
+    <div class="properties" *ngIf="classItem.classDeclaration.properties.length">
       <div class="properties-title">
         <i class="codicon codicon-chevron-down"></i>
         属性
       </div>
-      <div class="property" [ngClass]="{'selected': property === this.selected}" *ngFor="let property of classDeclaration.properties" (click)="selectProperty(property)">
+      <div class="property" [ngClass]="{'selected': property === this.selected}" *ngFor="let property of classItem.classDeclaration.properties" (click)="selectProperty(property)">
         <i class="codicon codicon-symbol-property"></i>
         <span>{{property.name}}</span>
       </div>
     </div>
-    <div class="methods" *ngIf="classDeclaration.methods.length">
+    <div class="methods" *ngIf="classItem.classDeclaration.methods.length">
       <div class="methods-title">
         <i class="codicon codicon-chevron-down"></i>
         方法
       </div>
-      <div class="method" [ngClass]="{'selected': method === this.selected}"  *ngFor="let method of classDeclaration.methods"  (click)="selectProperty(method)">
+      <div class="method" [ngClass]="{'selected': method === this.selected}"  *ngFor="let method of classItem.classDeclaration.methods"  (click)="selectProperty(method)">
         <i class="codicon codicon-symbol-function"></i>
         <span>{{method.name}}</span>
       </div>
     </div>
   </xhtml:div>
 </foreignObject>
-

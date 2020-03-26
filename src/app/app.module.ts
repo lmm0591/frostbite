@@ -10,6 +10,7 @@ import { ClassComponent } from '../components/uml/class/class.component';
 import { MethodComponent } from '../components/uml/method/method.component';
 import { MethodsComponent } from '../components/uml/methods/methods.component';
 import { UmlComponent } from '../components/uml/uml.component';
+import { LineComponent } from '../components/uml/line/line.component';
 
 export function onMonacoLoad() {
 
@@ -58,7 +59,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
     ClassComponent,
     MethodComponent,
     MethodsComponent,
-    UmlComponent
+    UmlComponent,
+    LineComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
     DragDropModule,
     ContextMenuModule.forRoot(),
     MonacoEditorModule.forRoot(monacoConfig)
-    
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
+import groupBy from 'lodash/groupBy';
+import get from 'lodash/get';
 import { ClassDeclaration } from 'src/lib/ts-parser';
 import { ClassItem } from './model/ClassItem';
 import { Point } from './model/Point';
-import groupBy from 'lodash/groupBy';
-import get from 'lodash/get';
+import { UmlService } from './uml.service';
 
 @Component({
   selector: 'app-uml',
@@ -12,7 +13,9 @@ import get from 'lodash/get';
 })
 export class UmlComponent implements OnInit {
 
-  constructor() { }
+  dragStartPoint: Point = new Point();
+
+  constructor(public umlService: UmlService) { }
 
   @Input()
   set classDeclarations(classDeclarations: ClassDeclaration[]){
@@ -25,10 +28,15 @@ export class UmlComponent implements OnInit {
       } else {
         const classItem = new ClassItem()
         classItem.classDeclaration = classDeclaration
-        classItem.point = new Point(0, index * 200)
+        classItem.point = new Point(0, index * 400)
         return classItem
       }
     })
+    this.umlService.classItems = this.classItems
+  }
+
+  get superClassItems(): ClassItem[]{
+    return this.classItems.filter(classItem => classItem.classDeclaration.superClassDeclaration)
   }
 
   classItems: ClassItem[] = []
@@ -41,7 +49,12 @@ export class UmlComponent implements OnInit {
   }
 
   cdkDragHandle({ distance }, classItem: ClassItem){
-    classItem.point.x = distance.x
-    classItem.point.y = distance.y
+    classItem.point.x = this.dragStartPoint.x + distance.x
+    classItem.point.y = this.dragStartPoint.y + distance.y
+  }
+
+  cdkDragStarted(classItem: ClassItem){
+    this.dragStartPoint.x = classItem.point.x
+    this.dragStartPoint.y = classItem.point.y
   }
 }
