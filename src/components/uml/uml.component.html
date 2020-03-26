@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 1000px;height:1000px;" viewBox="0 0 1000 1000" class="boundary">
+  <g app-class cdkDrag [cdkDragFreeDragPosition]="classItem.point" cdkDragBoundary=".boundary"  (cdkDragEnded)="cdkDragHandle($event, classItem)" [cdkDragFreeDragPosition]="classItem.point" *ngFor="let classItem of classItems;  let i=index" [classDeclaration]="classItem.classDeclaration" ></g>
+</svg>
