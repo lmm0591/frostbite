@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ClassDeclaration } from 'src/lib/ts-parser';
-import { ClassItem } from './model/classItem';
+import { ClassItem } from './model/ClassItem';
 import { Point } from './model/Point';
 import groupBy from 'lodash/groupBy';
 import get from 'lodash/get';
@@ -18,7 +18,7 @@ export class UmlComponent implements OnInit {
   set classDeclarations(classDeclarations: ClassDeclaration[]){
     const CLASS_DECLARATION_MAP = groupBy(this.classItems, 'classDeclaration.name')
     this.classItems = classDeclarations.map((classDeclaration, index) => {
-      const existClassItem = get(CLASS_DECLARATION_MAP[classDeclaration.name], '[0]') 
+      const existClassItem = get(CLASS_DECLARATION_MAP[classDeclaration.name], '[0]')
       if(existClassItem){
         existClassItem.classDeclaration = classDeclaration
         return existClassItem
