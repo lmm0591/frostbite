@@ -3,7 +3,7 @@ import groupBy from 'lodash/groupBy';
 import get from 'lodash/get';
 import { ClassDeclaration } from 'src/lib/ts-parser';
 import { ClassItem } from './model/ClassItem';
-import { Point } from './model/Point';
+import { Position } from './model/Position';
 import { UmlService } from './uml.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { UmlService } from './uml.service';
 })
 export class UmlComponent implements OnInit {
 
-  dragStartPoint: Point = new Point();
+  dragStartPoint: Position = new Position();
 
   constructor(public umlService: UmlService) { }
 
@@ -28,15 +28,20 @@ export class UmlComponent implements OnInit {
       } else {
         const classItem = new ClassItem()
         classItem.classDeclaration = classDeclaration
-        classItem.point = new Point(0, index * 400)
+        classItem.rect.position = new Position(0, index * 400)
         return classItem
       }
     })
     this.umlService.classItems = this.classItems
   }
 
-  get superClassItems(): ClassItem[]{
-    return this.classItems.filter(classItem => classItem.classDeclaration.superClassDeclaration)
+  get joinLines() {
+    return this.classItems.filter(classItem => classItem.classDeclaration.superClassDeclaration).map(classItem => {
+      return {
+        source: classItem,
+        target: this.umlService.getClassItemByClassName(classItem.classDeclaration.superClassDeclaration.name)
+      }
+    })
   }
 
   classItems: ClassItem[] = []
@@ -49,12 +54,12 @@ export class UmlComponent implements OnInit {
   }
 
   cdkDragHandle({ distance }, classItem: ClassItem){
-    classItem.point.x = this.dragStartPoint.x + distance.x
-    classItem.point.y = this.dragStartPoint.y + distance.y
+    classItem.rect.position.x = this.dragStartPoint.x + distance.x
+    classItem.rect.position.y = this.dragStartPoint.y + distance.y
   }
 
   cdkDragStarted(classItem: ClassItem){
-    this.dragStartPoint.x = classItem.point.x
-    this.dragStartPoint.y = classItem.point.y
+    this.dragStartPoint.x = classItem.rect.position.x
+    this.dragStartPoint.y = classItem.rect.position.y
   }
 }

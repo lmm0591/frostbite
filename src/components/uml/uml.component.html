@@ -4,6 +4,6 @@
       <polygon class="line-marker" points="7,5 0,10 0,0"></polygon>
     </marker>
   </defs>
-  <g app-line *ngFor="let superClassItem of superClassItems" [source]="superClassItem" [target]="umlService.getClassItemByClassName(superClassItem.classDeclaration.superClassDeclaration.name)"></g>
-  <g app-class cdkDrag [cdkDragFreeDragPosition]="classItem.point" [classItem]="classItem" cdkDragBoundary=".boundary" (cdkDragStarted)="cdkDragStarted(classItem)"  (cdkDragMoved)="cdkDragHandle($event, classItem)" [cdkDragFreeDragPosition]="classItem.point" *ngFor="let classItem of classItems;  let i=index"></g>
+  <g app-line *ngFor="let joinLine of joinLines" [source]="joinLine.source" [target]="joinLine.target"></g>
+  <g app-class cdkDrag [cdkDragFreeDragPosition]="classItem.startPosition" [classItem]="classItem" cdkDragBoundary=".boundary" (cdkDragStarted)="cdkDragStarted(classItem)"  (cdkDragMoved)="cdkDragHandle($event, classItem)" *ngFor="let classItem of classItems;  let i=index"></g>
 </svg>

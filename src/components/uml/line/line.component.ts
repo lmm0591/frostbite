@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import flatten from 'lodash/flatten';
 import { ClassItem } from '../model/ClassItem';
 import { Direction } from '../model/Direction';
-import { Point } from '../model/Point';
+import { Position } from '../model/Position';
+import { Painter } from '../model/joinLine/Painter';
 
 @Component({
   selector: 'g[app-line]',
@@ -19,12 +21,14 @@ export class LineComponent implements OnInit {
   @Input()
   target: ClassItem
 
-  get sourcePoint(): Point{
-    return this.source.getDirectionPoint(Direction.N)
+  get linePoints(): String {
+    const painter = new Painter(this.source, this.target)
+    return painter.joinPoint.map(({x, y}) => [x, y]).join(' ')
   }
 
-  get targetPoint(): Point{
-    return this.target.getDirectionPoint(Direction.S)
+  get pathPoints(): Position[]{
+    const painter = new Painter(this.source, this.target)
+    return flatten(painter.gridPath)
   }
 
   ngOnInit(): void {}
